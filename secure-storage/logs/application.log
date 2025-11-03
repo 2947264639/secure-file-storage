@@ -1,0 +1,164 @@
+2025-11-03 10:51:05 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Starting application using Java 17.0.14 with PID 22004 (started by hasee in D:\develop\idea_workspace\secure-file-storage)
+2025-11-03 10:51:05 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-03 10:51:06 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 创建目录: .\secure-storage\encrypted
+2025-11-03 10:51:06 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 创建目录: .\secure-storage\decrypted
+2025-11-03 10:51:06 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 创建目录: .\secure-storage\signatures
+2025-11-03 10:51:06 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 文件存储服务初始化完成，基础目录: ./secure-storage
+2025-11-03 10:51:06 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Started application in 1.185 seconds (process running for 2.176)
+2025-11-03 10:51:06 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 创建新密钥库: user.p12
+2025-11-03 10:51:06 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 密钥库创建成功
+2025-11-03 10:51:06 [JavaFX Application Thread] INFO  c.s.f.service.SignatureService - 生成RSA密钥对...
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.s.f.service.SignatureService - RSA密钥对生成成功
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 存储密钥对和证书到密钥库，别名: user-key
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 生成自签名证书: CN=SecureFileUser, O=SecureStorage, C=CN
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 自签名证书生成成功
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 密钥对和证书存储成功
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 密钥库已保存: user.p12
+2025-11-03 10:51:07 [JavaFX Application Thread] INFO  c.security.filestore.ui.MainWindow - 已创建新密钥对
+2025-11-03 10:52:19 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Starting application using Java 17.0.14 with PID 29644 (started by hasee in D:\develop\idea_workspace\secure-file-storage)
+2025-11-03 10:52:19 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-03 10:52:19 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 文件存储服务初始化完成，基础目录: ./secure-storage
+2025-11-03 10:52:19 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Started application in 0.92 seconds (process running for 1.858)
+2025-11-03 10:52:19 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 加载密钥库: user.p12
+2025-11-03 10:52:20 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 密钥库加载成功
+2025-11-03 10:52:20 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取私钥，别名: user-key
+2025-11-03 10:52:20 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取公钥，别名: user-key
+2025-11-03 10:52:20 [JavaFX Application Thread] INFO  c.security.filestore.ui.MainWindow - 已加载现有密钥对
+2025-11-03 10:53:28 [Thread-4] INFO  c.s.f.service.FileStorageService - 开始处理文件上传: 文件内容
+2025-11-03 10:53:28 [Thread-4] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-1)
+2025-11-03 10:53:28 [Thread-4] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: 7e689833b43bc476297504244d54f23ed50e55c9
+2025-11-03 10:53:28 [Thread-4] INFO  c.s.f.service.EncryptionService - 开始加密文件: 文件内容
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.EncryptionService - 文件加密完成: 7caa53d7-947d-4e07-93d0-2fb349475afb.enc
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.SignatureService - 对文件进行数字签名: 文件内容
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-256)
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: a5e0d0232a4686c97ac626011c00cb469da1d6f9eaea3f1398ecab05f08f9d06
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.SignatureService - 文件签名完成，签名长度: 256 bytes
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.SignatureService - 签名已保存到文件: 7caa53d7-947d-4e07-93d0-2fb349475afb.sig
+2025-11-03 10:53:29 [Thread-4] INFO  c.s.f.service.FileStorageService - 文件上传并加密成功: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:53:42 [Thread-5] INFO  c.s.f.service.FileStorageService - 开始解密文件: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:53:42 [Thread-5] INFO  c.s.f.service.EncryptionService - 开始解密文件: 7caa53d7-947d-4e07-93d0-2fb349475afb.enc
+2025-11-03 10:53:42 [Thread-5] ERROR c.s.f.service.EncryptionService - 解密失败: 密码错误
+java.io.IOException: javax.crypto.BadPaddingException: Given final block not properly padded. Such issues can arise if a bad key is used during decryption.
+	at java.base/javax.crypto.CipherInputStream.getMoreData(CipherInputStream.java:148)
+	at java.base/javax.crypto.CipherInputStream.read(CipherInputStream.java:261)
+	at java.base/javax.crypto.CipherInputStream.read(CipherInputStream.java:237)
+	at com.security.filestore.service.EncryptionService.decryptFile(EncryptionService.java:154)
+	at com.security.filestore.service.FileStorageService.decryptFile(FileStorageService.java:149)
+	at com.security.filestore.ui.MainWindow.lambda$handleDecryptFile$18(MainWindow.java:336)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: javax.crypto.BadPaddingException: Given final block not properly padded. Such issues can arise if a bad key is used during decryption.
+	at java.base/com.sun.crypto.provider.CipherCore.unpad(CipherCore.java:862)
+	at java.base/com.sun.crypto.provider.CipherCore.fillOutputBuffer(CipherCore.java:942)
+	at java.base/com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:826)
+	at java.base/com.sun.crypto.provider.AESCipher.engineDoFinal(AESCipher.java:480)
+	at java.base/javax.crypto.Cipher.doFinal(Cipher.java:2152)
+	at java.base/javax.crypto.CipherInputStream.getMoreData(CipherInputStream.java:145)
+	... 6 common frames omitted
+2025-11-03 10:53:42 [Thread-5] ERROR c.security.filestore.ui.MainWindow - 文件解密失败
+java.lang.SecurityException: 密码错误或文件已损坏
+	at com.security.filestore.service.EncryptionService.decryptFile(EncryptionService.java:160)
+	at com.security.filestore.service.FileStorageService.decryptFile(FileStorageService.java:149)
+	at com.security.filestore.ui.MainWindow.lambda$handleDecryptFile$18(MainWindow.java:336)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-11-03 10:53:49 [Thread-6] INFO  c.s.f.service.FileStorageService - 开始解密文件: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:53:49 [Thread-6] INFO  c.s.f.service.EncryptionService - 开始解密文件: 7caa53d7-947d-4e07-93d0-2fb349475afb.enc
+2025-11-03 10:53:49 [Thread-6] INFO  c.s.f.service.EncryptionService - 文件解密完成: 文件内容
+2025-11-03 10:53:49 [Thread-6] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-1)
+2025-11-03 10:53:49 [Thread-6] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: 7e689833b43bc476297504244d54f23ed50e55c9
+2025-11-03 10:53:49 [Thread-6] INFO  c.s.f.service.FileStorageService - 文件解密成功: 文件内容
+2025-11-03 10:54:26 [Thread-7] INFO  c.s.f.service.FileStorageService - 验证文件签名: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:54:26 [Thread-7] INFO  c.s.f.service.SignatureService - 从文件加载签名: 7caa53d7-947d-4e07-93d0-2fb349475afb.sig
+2025-11-03 10:54:26 [Thread-7] INFO  c.s.f.service.SignatureService - 验证文件签名: 文件内容
+2025-11-03 10:54:26 [Thread-7] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-256)
+2025-11-03 10:54:26 [Thread-7] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: a5e0d0232a4686c97ac626011c00cb469da1d6f9eaea3f1398ecab05f08f9d06
+2025-11-03 10:54:26 [Thread-7] INFO  c.s.f.service.SignatureService - 签名验证成功
+2025-11-03 10:54:31 [Thread-8] INFO  c.s.f.service.FileStorageService - 验证文件签名: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:54:31 [Thread-8] INFO  c.s.f.service.SignatureService - 从文件加载签名: 7caa53d7-947d-4e07-93d0-2fb349475afb.sig
+2025-11-03 10:54:31 [Thread-8] INFO  c.s.f.service.SignatureService - 验证文件签名: 文件内容
+2025-11-03 10:54:31 [Thread-8] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-256)
+2025-11-03 10:54:31 [Thread-8] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: a5e0d0232a4686c97ac626011c00cb469da1d6f9eaea3f1398ecab05f08f9d06
+2025-11-03 10:54:31 [Thread-8] INFO  c.s.f.service.SignatureService - 签名验证成功
+2025-11-03 10:54:50 [Thread-9] INFO  c.s.f.service.FileStorageService - 验证文件签名: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:54:50 [Thread-9] INFO  c.s.f.service.SignatureService - 从文件加载签名: 7caa53d7-947d-4e07-93d0-2fb349475afb.sig
+2025-11-03 10:54:50 [Thread-9] INFO  c.s.f.service.SignatureService - 验证文件签名: 文件内容
+2025-11-03 10:54:50 [Thread-9] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-256)
+2025-11-03 10:54:50 [Thread-9] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: a5e0d0232a4686c97ac626011c00cb469da1d6f9eaea3f1398ecab05f08f9d06
+2025-11-03 10:54:50 [Thread-9] INFO  c.s.f.service.SignatureService - 签名验证成功
+2025-11-03 10:54:54 [JavaFX Application Thread] INFO  c.s.f.service.FileStorageService - 删除文件: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:54:54 [JavaFX Application Thread] INFO  c.s.f.service.FileStorageService - 文件删除成功: 7caa53d7-947d-4e07-93d0-2fb349475afb
+2025-11-03 10:56:37 [Thread-10] INFO  c.s.f.service.FileStorageService - 开始处理文件上传: 文件内容
+2025-11-03 10:56:37 [Thread-10] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-1)
+2025-11-03 10:56:37 [Thread-10] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: 7e689833b43bc476297504244d54f23ed50e55c9
+2025-11-03 10:56:37 [Thread-10] INFO  c.s.f.service.EncryptionService - 开始加密文件: 文件内容
+2025-11-03 10:56:38 [Thread-10] INFO  c.s.f.service.EncryptionService - 文件加密完成: 490fb1b5-d5a0-4a06-bdd1-50d12644e0f7.enc
+2025-11-03 10:56:38 [Thread-10] INFO  c.s.f.service.FileStorageService - 文件上传并加密成功: 490fb1b5-d5a0-4a06-bdd1-50d12644e0f7
+2025-11-03 10:57:23 [Thread-11] INFO  c.s.f.service.FileStorageService - 开始解密文件: 490fb1b5-d5a0-4a06-bdd1-50d12644e0f7
+2025-11-03 10:57:23 [Thread-11] INFO  c.s.f.service.EncryptionService - 开始解密文件: 490fb1b5-d5a0-4a06-bdd1-50d12644e0f7.enc
+2025-11-03 10:57:23 [Thread-11] INFO  c.s.f.service.EncryptionService - 文件解密完成: 文件内容
+2025-11-03 10:57:23 [Thread-11] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 文件内容 (算法: SHA-1)
+2025-11-03 10:57:23 [Thread-11] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: 7e689833b43bc476297504244d54f23ed50e55c9
+2025-11-03 10:57:23 [Thread-11] INFO  c.s.f.service.FileStorageService - 文件解密成功: 文件内容
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.FileStorageService - 开始处理文件上传: 项目结构i.txt
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 项目结构i.txt (算法: SHA-1)
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: b551fe006631c0916787bbfefd1393b09a05cf82
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.EncryptionService - 开始加密文件: 项目结构i.txt
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.EncryptionService - 文件加密完成: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3.enc
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.SignatureService - 对文件进行数字签名: 项目结构i.txt
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 项目结构i.txt (算法: SHA-256)
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: 7591d027576ac558757b33f7afdfb25adf85ef04f7ff857f88ccbade534e66f4
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.SignatureService - 文件签名完成，签名长度: 256 bytes
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.SignatureService - 签名已保存到文件: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3.sig
+2025-11-03 10:57:59 [Thread-12] INFO  c.s.f.service.FileStorageService - 文件上传并加密成功: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3
+2025-11-03 10:58:03 [Thread-13] INFO  c.s.f.service.FileStorageService - 验证文件签名: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3
+2025-11-03 10:58:03 [Thread-13] ERROR c.security.filestore.ui.MainWindow - 签名验证失败
+java.lang.IllegalStateException: 请先解密文件再验证签名
+	at com.security.filestore.service.FileStorageService.verifyFileSignature(FileStorageService.java:187)
+	at com.security.filestore.ui.MainWindow.lambda$handleVerifySignature$22(MainWindow.java:372)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-11-03 10:58:11 [Thread-14] INFO  c.s.f.service.FileStorageService - 开始解密文件: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3
+2025-11-03 10:58:11 [Thread-14] INFO  c.s.f.service.EncryptionService - 开始解密文件: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3.enc
+2025-11-03 10:58:11 [Thread-14] INFO  c.s.f.service.EncryptionService - 文件解密完成: 项目结构i.txt
+2025-11-03 10:58:11 [Thread-14] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 项目结构i.txt (算法: SHA-1)
+2025-11-03 10:58:11 [Thread-14] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: b551fe006631c0916787bbfefd1393b09a05cf82
+2025-11-03 10:58:11 [Thread-14] INFO  c.s.f.service.FileStorageService - 文件解密成功: 项目结构i.txt
+2025-11-03 10:58:21 [Thread-15] INFO  c.s.f.service.FileStorageService - 验证文件签名: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3
+2025-11-03 10:58:21 [Thread-15] INFO  c.s.f.service.SignatureService - 从文件加载签名: 96ca70ef-23c2-4e3b-aad4-5dfdf0df83e3.sig
+2025-11-03 10:58:21 [Thread-15] INFO  c.s.f.service.SignatureService - 验证文件签名: 项目结构i.txt
+2025-11-03 10:58:21 [Thread-15] INFO  c.s.f.service.IntegrityService - 计算文件哈希: 项目结构i.txt (算法: SHA-256)
+2025-11-03 10:58:21 [Thread-15] INFO  c.s.f.service.IntegrityService - 文件哈希计算完成: 7591d027576ac558757b33f7afdfb25adf85ef04f7ff857f88ccbade534e66f4
+2025-11-03 10:58:21 [Thread-15] INFO  c.s.f.service.SignatureService - 签名验证成功
+2025-11-03 11:09:55 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Starting application using Java 17.0.14 with PID 3528 (started by hasee in D:\develop\idea_workspace\secure-file-storage)
+2025-11-03 11:09:55 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-03 11:09:56 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 文件存储服务初始化完成，基础目录: ./secure-storage
+2025-11-03 11:09:56 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Started application in 1.149 seconds (process running for 2.211)
+2025-11-03 11:09:56 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 加载密钥库: user.p12
+2025-11-03 11:09:56 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 密钥库加载成功
+2025-11-03 11:09:56 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取私钥，别名: user-key
+2025-11-03 11:09:56 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取公钥，别名: user-key
+2025-11-03 11:09:56 [JavaFX Application Thread] INFO  c.security.filestore.ui.MainWindow - 已加载现有密钥对
+2025-11-03 11:10:11 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取证书，别名: user-key
+2025-11-03 11:10:11 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 证书验证成功
+2025-11-03 11:10:14 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取证书，别名: user-key
+2025-11-03 11:10:14 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 证书验证成功
+2025-11-03 11:10:27 [Thread-4] INFO  c.s.f.service.SignatureService - 生成RSA密钥对...
+2025-11-03 11:10:28 [Thread-4] INFO  c.s.f.service.SignatureService - RSA密钥对生成成功
+2025-11-03 11:10:28 [Thread-4] INFO  c.s.f.service.KeyManagementService - 存储密钥对和证书到密钥库，别名: user-key
+2025-11-03 11:10:28 [Thread-4] INFO  c.s.f.service.KeyManagementService - 生成自签名证书: CN=SecureFileUser, O=SecureStorage, C=CN
+2025-11-03 11:10:28 [Thread-4] INFO  c.s.f.service.KeyManagementService - 自签名证书生成成功
+2025-11-03 11:10:28 [Thread-4] INFO  c.s.f.service.KeyManagementService - 密钥对和证书存储成功
+2025-11-03 11:10:28 [Thread-4] INFO  c.s.f.service.KeyManagementService - 密钥库已保存: user.p12
+2025-11-03 11:10:41 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取证书，别名: user-key
+2025-11-03 11:10:41 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 证书验证成功
+2025-11-03 11:12:22 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Starting application using Java 17.0.14 with PID 6356 (started by hasee in D:\develop\idea_workspace\secure-file-storage)
+2025-11-03 11:12:22 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-03 11:12:23 [JavaFX-Launcher] INFO  c.s.f.service.FileStorageService - 文件存储服务初始化完成，基础目录: ./secure-storage
+2025-11-03 11:12:23 [JavaFX-Launcher] INFO  o.s.boot.SpringApplication - Started application in 1.004 seconds (process running for 2.013)
+2025-11-03 11:12:23 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 加载密钥库: user.p12
+2025-11-03 11:12:23 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 密钥库加载成功
+2025-11-03 11:12:23 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取私钥，别名: user-key
+2025-11-03 11:12:23 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取公钥，别名: user-key
+2025-11-03 11:12:23 [JavaFX Application Thread] INFO  c.security.filestore.ui.MainWindow - 已加载现有密钥对
+2025-11-03 11:13:28 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取证书，别名: user-key
+2025-11-03 11:13:28 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 证书验证成功
+2025-11-03 11:13:29 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 从密钥库获取证书，别名: user-key
+2025-11-03 11:13:29 [JavaFX Application Thread] INFO  c.s.f.service.KeyManagementService - 证书验证成功

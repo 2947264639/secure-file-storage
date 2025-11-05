@@ -145,6 +145,26 @@ public class FileStorageService {
         File decryptedFile = new File(Paths.get(baseDir, decryptedDir,
                 decryptedFileName).toString());
 
+        // 如果文件已存在，添加序号
+        int counter = 1;
+        String baseName = decryptedFileName;
+        int lastDot = baseName.lastIndexOf('.');
+        if (lastDot > 0) {
+            String nameWithoutExt = baseName.substring(0, lastDot);
+            String ext = baseName.substring(lastDot);
+            while (decryptedFile.exists()) {
+                baseName = nameWithoutExt + "_" + counter + ext;
+                decryptedFile = new File(Paths.get(baseDir, decryptedDir, baseName).toString());
+                counter++;
+            }
+        } else {
+            while (decryptedFile.exists()) {
+                baseName = decryptedFileName + "_" + counter;
+                decryptedFile = new File(Paths.get(baseDir, decryptedDir, baseName).toString());
+                counter++;
+            }
+        }
+
         // 解密文件
         encryptionService.decryptFile(encryptedFile, decryptedFile, password);
 
@@ -156,8 +176,120 @@ public class FileStorageService {
             throw new SecurityException("文件完整性验证失败");
         }
 
+        // 更新元数据，标记为已解密
+        metadata.setDecrypted(true);
+        metadata.setDecryptedFilePath(decryptedFile.getAbsolutePath());
+
         log.info("文件解密成功: {}", decryptedFileName);
         return decryptedFile;
+    }
+
+    /**
+     * 直接解密外部加密文件（不依赖元数据）
+     * @param encryptedFile 加密文件
+     * @param password 解密密码
+     * @return 文件元数据（包含解密后的文件信息）
+     */
+    public FileMetadata decryptExternalFile(File encryptedFile, String password) throws Exception {
+        log.info("开始解密外部文件: {}", encryptedFile.getName());
+
+        if (!encryptedFile.exists()) {
+            throw new IllegalArgumentException("加密文件不存在: " + encryptedFile.getAbsolutePath());
+        }
+
+        // 从文件名推断原始文件名（移除.enc后缀）
+        String originalFileName = encryptedFile.getName();
+        if (originalFileName.toLowerCase().endsWith(".enc")) {
+            originalFileName = originalFileName.substring(0, originalFileName.length() - 4);
+        } else {
+            originalFileName = originalFileName + ".decrypted";
+        }
+
+        File decryptedFile = new File(Paths.get(baseDir, decryptedDir,
+                originalFileName).toString());
+
+        // 确保目录存在
+        createDirectoryIfNotExists(Paths.get(baseDir, decryptedDir).toString());
+
+        // 如果文件已存在，添加序号
+        int counter = 1;
+        String baseName = originalFileName;
+        int lastDot = baseName.lastIndexOf('.');
+        if (lastDot > 0) {
+            String nameWithoutExt = baseName.substring(0, lastDot);
+            String ext = baseName.substring(lastDot);
+            while (decryptedFile.exists()) {
+                baseName = nameWithoutExt + "_" + counter + ext;
+                decryptedFile = new File(Paths.get(baseDir, decryptedDir, baseName).toString());
+                counter++;
+            }
+        } else {
+            while (decryptedFile.exists()) {
+                baseName = originalFileName + "_" + counter;
+                decryptedFile = new File(Paths.get(baseDir, decryptedDir, baseName).toString());
+                counter++;
+            }
+        }
+
+        // 解密文件
+        encryptionService.decryptFile(encryptedFile, decryptedFile, password);
+
+        // 计算解密文件的哈希值
+        String decryptedHash = integrityService.calculateFileHash(decryptedFile);
+
+        // 检查是否有对应的签名文件
+        // 1. 检查加密文件同目录下是否有.sig文件
+        File signatureFileInSameDir = new File(encryptedFile.getParent(), 
+                encryptedFile.getName().replace(".enc", ".sig"));
+        // 2. 检查签名目录下是否有对应的签名文件（基于文件名）
+        String SignName = encryptedFile.getName();
+        if (SignName.toLowerCase().endsWith(".enc")) {
+            SignName = SignName.substring(0, SignName.length() - 4);
+        }
+        File signatureFileInSigDir = new File(Paths.get(baseDir, signatureDir,
+                SignName + ".sig").toString());
+        
+        // 优先使用签名目录中的签名文件，否则使用同目录的
+        File signatureFile = null;
+        boolean isSigned = false;
+        if (signatureFileInSigDir.exists()) {
+            signatureFile = signatureFileInSigDir;
+            isSigned = true;
+            log.info("找到签名文件: {}", signatureFileInSigDir.getAbsolutePath());
+        } else if (signatureFileInSameDir.exists()) {
+            signatureFile = signatureFileInSameDir;
+            isSigned = true;
+            log.info("找到签名文件: {}", signatureFileInSameDir.getAbsolutePath());
+        }
+
+        // 创建文件元数据
+        String fileId = UUID.randomUUID().toString();
+        FileMetadata.FileMetadataBuilder metadataBuilder = FileMetadata.builder()
+                .fileId(fileId)
+                .originalFileName(originalFileName)
+                .originalFileSize(decryptedFile.length())
+                .originalFileHash(decryptedHash)
+                .encryptedFileName(encryptedFile.getName())
+                .encryptedFilePath(encryptedFile.getAbsolutePath())
+                .encrypted(false)  // 已解密后，不再标记为加密状态
+                .decrypted(true)   // 已解密
+                .decryptedFilePath(decryptedFile.getAbsolutePath())
+                .signed(isSigned)
+                .uploadTime(LocalDateTime.now());
+        
+        if (isSigned && signatureFile != null) {
+            metadataBuilder.signatureFileName(signatureFile.getName())
+                    .signatureFilePath(signatureFile.getAbsolutePath());
+        }
+        
+        FileMetadata metadata = metadataBuilder.build();
+
+        // 保存到元数据映射
+        fileMetadataMap.put(fileId, metadata);
+
+        log.info("外部文件解密成功: {}, 文件ID: {}, 签名: {}", 
+                decryptedFile.getName(), fileId, isSigned ? "是" : "否");
+        return metadata;
     }
 
     /**
@@ -179,9 +311,16 @@ public class FileStorageService {
         // 这里假设已经解密，或者对加密前的文件进行验证
         File signatureFile = new File(metadata.getSignatureFilePath());
 
-        // 需要原始文件来验证签名，这里使用解密后的文件
-        File decryptedFile = new File(Paths.get(baseDir, decryptedDir,
-                metadata.getOriginalFileName()).toString());
+        // 需要原始文件来验证签名，优先使用解密后的文件路径
+        File decryptedFile;
+        if (metadata.getDecryptedFilePath() != null && !metadata.getDecryptedFilePath().isEmpty()) {
+            // 使用元数据中保存的解密文件路径
+            decryptedFile = new File(metadata.getDecryptedFilePath());
+        } else {
+            // 回退到使用原始文件名
+            decryptedFile = new File(Paths.get(baseDir, decryptedDir,
+                    metadata.getOriginalFileName()).toString());
+        }
 
         if (!decryptedFile.exists()) {
             throw new IllegalStateException("请先解密文件再验证签名");

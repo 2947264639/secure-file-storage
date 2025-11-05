@@ -34,6 +34,10 @@ public class FileMetadata {
     private String signatureFileName;
     private String signatureFilePath;
 
+    // 解密信息
+    private boolean decrypted;
+    private String decryptedFilePath;
+
     // 时间戳
     private LocalDateTime uploadTime;
     private LocalDateTime lastAccessTime;
@@ -67,7 +71,11 @@ public class FileMetadata {
     public String getSecurityStatus() {
         StringBuilder status = new StringBuilder();
 
-        if (encrypted) {
+        if (decrypted) {
+            // 如果已解密，优先显示"已解密"，不显示"已加密"
+            status.append("已解密");
+        } else if (encrypted) {
+            // 只有在未解密时才显示"已加密"
             status.append("已加密");
         }
 

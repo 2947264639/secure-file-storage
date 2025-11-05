@@ -242,6 +242,13 @@ public class MainWindow {
      * 上传文件
      */
     private void uploadFile(File file) {
+        // 检查文件后缀，如果是.enc文件，则直接进行解密
+        String fileName = file.getName().toLowerCase();
+        if (fileName.endsWith(".enc")) {
+            handleDecryptExternalFile(file);
+            return;
+        }
+
         // 创建对话框获取加密密码和选项
         Dialog<UploadOptions> dialog = new Dialog<>();
         dialog.setTitle("文件加密选项");
@@ -316,6 +323,38 @@ public class MainWindow {
     }
 
     /**
+     * 处理解密外部加密文件（.enc文件）
+     */
+    private void handleDecryptExternalFile(File encryptedFile) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("解密加密文件");
+        dialog.setHeaderText("检测到加密文件: " + encryptedFile.getName());
+        dialog.setContentText("请输入解密密码:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(password -> {
+            new Thread(() -> {
+                try {
+                    updateStatus("正在解密文件: " + encryptedFile.getName());
+                    FileMetadata metadata = fileStorageService.decryptExternalFile(encryptedFile, password);
+
+                    Platform.runLater(() -> {
+                        refreshFileList();
+                        updateStatus("文件解密成功: " + metadata.getOriginalFileName());
+                        showInfo("成功", "文件已解密并添加到文件列表\n解密文件位置: " + metadata.getDecryptedFilePath());
+                    });
+                } catch (Exception e) {
+                    log.error("文件解密失败", e);
+                    Platform.runLater(() -> {
+                        showError("解密失败", e.getMessage());
+                        updateStatus("就绪");
+                    });
+                }
+            }).start();
+        });
+    }
+
+    /**
      * 处理文件解密
      */
     private void handleDecryptFile() {
@@ -339,6 +378,7 @@ public class MainWindow {
                             selected.getFileId(), password);
 
                     Platform.runLater(() -> {
+                        refreshFileList();  // 刷新文件列表以显示更新后的状态
                         updateStatus("文件解密成功: " + decryptedFile.getName());
                         showInfo("成功", "文件已解密到: " + decryptedFile.getAbsolutePath());
                     });
